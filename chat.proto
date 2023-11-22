@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package chatpackage;
+
+service Chat {
+    rpc Yoho(Yohorequest) returns (YohoResponse) {};
+}
+
+message Yohorequest{
+    string message = 1;
+}
+
+message YohoResponse{
+    string message = 1;
+}
+
