@@ -13,7 +13,7 @@ const chatPackage = grpcObject.chatpackage;
 function main() {
   const server = getServer();
   server.bindAsync(
-    "0.0.0.0:8000",
+    "0.0.0.0:9090",
     grpc.ServerCredentials.createInsecure(),
     (err) => {
       if (err) {
@@ -30,7 +30,8 @@ const getServer = () => {
   const server = new grpc.Server();
   server.addService(chatPackage.Chat.service, {
     Yoho: (req, res) => {
-      console.log(req, res);
+      console.log("Hi");
+      res(null, { message: "Hello from the server" });
     },
   });
 
