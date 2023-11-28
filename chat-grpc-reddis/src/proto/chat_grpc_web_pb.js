@@ -10,14 +10,17 @@
 // 	protoc              v3.21.12
 // source: chat.proto
 
+
 /* eslint-disable */
 // @ts-nocheck
 
+
+
 const grpc = {};
-grpc.web = require("grpc-web");
+grpc.web = require('grpc-web');
 
 const proto = {};
-proto.chatpackage = require("./chat_pb.js");
+proto.chatpackage = require('./chat_pb.js');
 
 /**
  * @param {string} hostname
@@ -27,9 +30,10 @@ proto.chatpackage = require("./chat_pb.js");
  * @struct
  * @final
  */
-proto.chatpackage.ChatClient = function (hostname, credentials, options) {
+proto.chatpackage.ChatClient =
+    function(hostname, credentials, options) {
   if (!options) options = {};
-  options.format = "text";
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -39,8 +43,10 @@ proto.chatpackage.ChatClient = function (hostname, credentials, options) {
   /**
    * @private @const {string} The hostname
    */
-  this.hostname_ = hostname.replace(/\/+$/, "");
+  this.hostname_ = hostname.replace(/\/+$/, '');
+
 };
+
 
 /**
  * @param {string} hostname
@@ -50,13 +56,10 @@ proto.chatpackage.ChatClient = function (hostname, credentials, options) {
  * @struct
  * @final
  */
-proto.chatpackage.ChatPromiseClient = function (
-  hostname,
-  credentials,
-  options
-) {
+proto.chatpackage.ChatPromiseClient =
+    function(hostname, credentials, options) {
   if (!options) options = {};
-  options.format = "text";
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -66,72 +69,188 @@ proto.chatpackage.ChatPromiseClient = function (
   /**
    * @private @const {string} The hostname
    */
-  this.hostname_ = hostname.replace(/\/+$/, "");
+  this.hostname_ = hostname.replace(/\/+$/, '');
+
 };
+
 
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.chatpackage.Yohorequest,
- *   !proto.chatpackage.YohoResponse>}
+ *   !proto.chatpackage.User,
+ *   !proto.chatpackage.JoinResponse>}
  */
-const methodDescriptor_Chat_Yoho = new grpc.web.MethodDescriptor(
-  "/chatpackage.Chat/Yoho",
+const methodDescriptor_Chat_JoinChat = new grpc.web.MethodDescriptor(
+  '/chatpackage.Chat/JoinChat',
   grpc.web.MethodType.UNARY,
-  proto.chatpackage.Yohorequest,
-  proto.chatpackage.YohoResponse,
+  proto.chatpackage.User,
+  proto.chatpackage.JoinResponse,
   /**
-   * @param {!proto.chatpackage.Yohorequest} request
+   * @param {!proto.chatpackage.User} request
    * @return {!Uint8Array}
    */
-  function (request) {
+  function(request) {
     return request.serializeBinary();
   },
-  proto.chatpackage.YohoResponse.deserializeBinary
+  proto.chatpackage.JoinResponse.deserializeBinary
 );
 
+
 /**
- * @param {!proto.chatpackage.Yohorequest} request The
+ * @param {!proto.chatpackage.User} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.RpcError, ?proto.chatpackage.YohoResponse)}
+ * @param {function(?grpc.web.RpcError, ?proto.chatpackage.JoinResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.chatpackage.YohoResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.chatpackage.JoinResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.chatpackage.ChatClient.prototype.yoho = function (
-  request,
-  metadata,
-  callback
-) {
-  return this.client_.rpcCall(
-    this.hostname_ + "/chatpackage.Chat/Yoho",
-    request,
-    metadata || {},
-    methodDescriptor_Chat_Yoho,
-    callback
-  );
+proto.chatpackage.ChatClient.prototype.joinChat =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/chatpackage.Chat/JoinChat',
+      request,
+      metadata || {},
+      methodDescriptor_Chat_JoinChat,
+      callback);
 };
 
+
 /**
- * @param {!proto.chatpackage.Yohorequest} request The
+ * @param {!proto.chatpackage.User} request The
  *     request proto
  * @param {?Object<string, string>=} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.chatpackage.YohoResponse>}
+ * @return {!Promise<!proto.chatpackage.JoinResponse>}
  *     Promise that resolves to the response
  */
-proto.chatpackage.ChatPromiseClient.prototype.yoho = function (
-  request,
-  metadata
-) {
-  return this.client_.unaryCall(
-    this.hostname_ + "/chatpackage.Chat/Yoho",
-    request,
-    metadata || {},
-    methodDescriptor_Chat_Yoho
-  );
+proto.chatpackage.ChatPromiseClient.prototype.joinChat =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/chatpackage.Chat/JoinChat',
+      request,
+      metadata || {},
+      methodDescriptor_Chat_JoinChat);
 };
 
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.chatpackage.ChatMessage,
+ *   !proto.chatpackage.Nil>}
+ */
+const methodDescriptor_Chat_sendChat = new grpc.web.MethodDescriptor(
+  '/chatpackage.Chat/sendChat',
+  grpc.web.MethodType.UNARY,
+  proto.chatpackage.ChatMessage,
+  proto.chatpackage.Nil,
+  /**
+   * @param {!proto.chatpackage.ChatMessage} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chatpackage.Nil.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.chatpackage.ChatMessage} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.chatpackage.Nil)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.chatpackage.Nil>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.chatpackage.ChatClient.prototype.sendChat =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/chatpackage.Chat/sendChat',
+      request,
+      metadata || {},
+      methodDescriptor_Chat_sendChat,
+      callback);
+};
+
+
+/**
+ * @param {!proto.chatpackage.ChatMessage} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.chatpackage.Nil>}
+ *     Promise that resolves to the response
+ */
+proto.chatpackage.ChatPromiseClient.prototype.sendChat =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/chatpackage.Chat/sendChat',
+      request,
+      metadata || {},
+      methodDescriptor_Chat_sendChat);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.chatpackage.Nil,
+ *   !proto.chatpackage.ChatMessage>}
+ */
+const methodDescriptor_Chat_recieveChat = new grpc.web.MethodDescriptor(
+  '/chatpackage.Chat/recieveChat',
+  grpc.web.MethodType.SERVER_STREAMING,
+  proto.chatpackage.Nil,
+  proto.chatpackage.ChatMessage,
+  /**
+   * @param {!proto.chatpackage.Nil} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.chatpackage.ChatMessage.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.chatpackage.Nil} request The request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!grpc.web.ClientReadableStream<!proto.chatpackage.ChatMessage>}
+ *     The XHR Node Readable Stream
+ */
+proto.chatpackage.ChatClient.prototype.recieveChat =
+    function(request, metadata) {
+  return this.client_.serverStreaming(this.hostname_ +
+      '/chatpackage.Chat/recieveChat',
+      request,
+      metadata || {},
+      methodDescriptor_Chat_recieveChat);
+};
+
+
+/**
+ * @param {!proto.chatpackage.Nil} request The request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!grpc.web.ClientReadableStream<!proto.chatpackage.ChatMessage>}
+ *     The XHR Node Readable Stream
+ */
+proto.chatpackage.ChatPromiseClient.prototype.recieveChat =
+    function(request, metadata) {
+  return this.client_.serverStreaming(this.hostname_ +
+      '/chatpackage.Chat/recieveChat',
+      request,
+      metadata || {},
+      methodDescriptor_Chat_recieveChat);
+};
+
+
 module.exports = proto.chatpackage;
+

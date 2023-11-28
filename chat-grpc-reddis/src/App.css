@@ -1,3 +1,60 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
+/* App.css */
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.Chat {
+  border: 1px solid #ccc;
+  width: 300px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Messages {
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.Message {
+  padding: 8px;
+  margin-bottom: 8px;
+  max-width: 80%;
+  border-radius: 8px;
+}
+
+.User {
+  background-color: #3498db;
+  color: #fff;
+  align-self: flex-end;
+}
+
+.Bot {
+  background-color: #e74c3c;
+  color: #fff;
+  align-self: flex-start;
+}
+
+.InputContainer {
+  display: flex;
+  margin-top: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+button {
+  padding: 8px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
