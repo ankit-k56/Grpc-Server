@@ -8,10 +8,22 @@ services:
       - "9901:9901"
       - "8080:8080"
   redis:
-    image: bitnami/redis
+    image: redis:6.0.7
+    container_name: redis
+    restart: always
     volumes:
-      - ./data:/bitnami/redis/data
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+      - redis_volume_data:/data
     ports:
-      - "6379:6379"
+      - 6379:6379
+  redis_insight:
+    image: redislabs/redisinsight:latest
+    container_name: redis_insight
+    restart: always
+    ports:
+      - 8001:8001
+    volumes:
+      - redis_insight_volume_data:/db
+
+volumes:
+  redis_volume_data:
+  redis_insight_volume_data:

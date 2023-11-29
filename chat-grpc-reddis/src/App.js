@@ -1,7 +1,7 @@
 // App.js
 import React, { useState, useEffect } from "react";
 import { ChatClient } from "./proto/chat_grpc_web_pb";
-import { ChatMessage, User, Nil } from "./proto/chat_pb";
+import { ChatMessage, Nil } from "./proto/chat_pb";
 
 import "./App.css";
 
@@ -10,7 +10,7 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [userName, setUserName] = useState("Ankit");
-  const [joined, setJoined] = useState(true);
+  // const [joined, setJoined] = useState(true);
 
   useEffect(() => {
     // client = new ChatClient("http://localhost:8080");
@@ -29,7 +29,9 @@ const App = () => {
       const from = res.getUser();
       const msg = res.getMessage();
 
-      setMessages([...messages, { text: msg, sender: from }]);
+      // setMessages([...messages, { text: msg, sender: from }]);
+      // setMessages()
+      setMessages((messages) => [...messages, { text: msg, sender: from }]);
       console.log(messages);
     });
     chatStream.on("end", () => {
@@ -44,78 +46,78 @@ const App = () => {
     client.sendChat(chat, {}, (err, res) => {
       if (err) {
         console.error(err);
+        setUserName("J");
       }
       // console.log(res);
       console.log(messages);
     });
   };
 
-  const joinHandler = () => {
-    const user = new User();
-    user.setName = userName;
-    user.setId = userName;
-    client.JoinChat(user, {}, (err, res) => {
-      if (err) {
-        console.error(err);
-      }
-      const msg = res.getMessage();
-      if (msg === "User already exists") {
-        alert(msg);
-        return;
-      }
-      setJoined(true);
-    });
-  };
+  // const joinHandler = () => {
+  //   const user = new User();
+  //   user.setName = userName;
+  //   user.setId = userName;
+  //   client.JoinChat(user, {}, (err, res) => {
+  //     if (err) {
+  //       console.error(err);
+  //     }
+  //     const msg = res.getMessage();
+  //     if (msg === "User already exists") {
+  //       alert(msg);
+  //       return;
+  //     }
+  //     // setJoined(true);
+  //   });
+  // };
 
-  const nameHandler = (e) => {
-    console.log(userName);
-    setUserName(e.target.value);
-  };
+  // const nameHandler = (e) => {
+  //   console.log(userName);
+  //   setUserName(e.target.value);
+  // };
 
-  const Login = () => {
-    return (
-      <div>
-        <input
-          onChange={nameHandler}
-          type="text"
-          placeholder="Enter your name"
-          value={userName}
-        />
-        <button onClick={joinHandler}>Join Chat</button>
-      </div>
-    );
-  };
+  // const Login = () => {
+  //   return (
+  //     <div>
+  //       <input
+  //         onChange={nameHandler}
+  //         type="text"
+  //         placeholder="Enter your name"
+  //         value={userName}
+  //       />
+  //       <button onClick={joinHandler}>Join Chat</button>
+  //     </div>
+  //   );
+  // };
 
-  const ChatApp = () => {
-    return (
-      <div className="App">
-        <div className="Chat">
-          <div className="Messages">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`Message ${
-                  message.sender === "user" ? "User" : "Bot"
-                }`}
-              >
-                {message.text}
-              </div>
-            ))}
-          </div>
-          <div className="InputContainer">
-            <input
-              type="text"
-              placeholder="Type a message..."
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-            />
-            <button onClick={sendMsg}>Send</button>
-          </div>
+  return (
+    <div className="App">
+      <div className="Chat">
+        <div className="Messages">
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`Message ${
+                message.sender === "user" ? "User" : "Bot"
+              }`}
+            >
+              {message.text}
+            </div>
+          ))}
+        </div>
+        <div className="InputContainer">
+          <input
+            type="text"
+            placeholder="Type a message..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+          />
+          <button onClick={sendMsg}>Send</button>
         </div>
       </div>
-    );
-  };
-  return <div className="App">{joined ? <ChatApp /> : <Login />}</div>;
+    </div>
+  );
+
+  // return <div className="App">{joined ? <ChatApp /> : <Login />}</div>;
 };
 
 export default App;
