@@ -80,8 +80,8 @@ proto.chatpackage.ChatPromiseClient =
  *   !proto.chatpackage.User,
  *   !proto.chatpackage.JoinResponse>}
  */
-const methodDescriptor_Chat_JoinChat = new grpc.web.MethodDescriptor(
-  '/chatpackage.Chat/JoinChat',
+const methodDescriptor_Chat_joinChat = new grpc.web.MethodDescriptor(
+  '/chatpackage.Chat/joinChat',
   grpc.web.MethodType.UNARY,
   proto.chatpackage.User,
   proto.chatpackage.JoinResponse,
@@ -109,10 +109,10 @@ const methodDescriptor_Chat_JoinChat = new grpc.web.MethodDescriptor(
 proto.chatpackage.ChatClient.prototype.joinChat =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/chatpackage.Chat/JoinChat',
+      '/chatpackage.Chat/joinChat',
       request,
       metadata || {},
-      methodDescriptor_Chat_JoinChat,
+      methodDescriptor_Chat_joinChat,
       callback);
 };
 
@@ -128,10 +128,10 @@ proto.chatpackage.ChatClient.prototype.joinChat =
 proto.chatpackage.ChatPromiseClient.prototype.joinChat =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/chatpackage.Chat/JoinChat',
+      '/chatpackage.Chat/joinChat',
       request,
       metadata || {},
-      methodDescriptor_Chat_JoinChat);
+      methodDescriptor_Chat_joinChat);
 };
 
 

@@ -1,7 +1,7 @@
 // App.js
 import React, { useState, useEffect } from "react";
 import { ChatClient } from "./proto/chat_grpc_web_pb";
-import { ChatMessage, Nil } from "./proto/chat_pb";
+import { ChatMessage, Nil, User } from "./proto/chat_pb";
 
 import "./App.css";
 
@@ -10,6 +10,7 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [userName, setUserName] = useState("Ankit");
+  // const [user, setUser] = useState({});
   // const [joined, setJoined] = useState(true);
 
   useEffect(() => {
@@ -43,37 +44,48 @@ const App = () => {
     const chat = new ChatMessage();
     chat.setMessage(newMessage);
     chat.setUser(userName);
+    console.log(chat);
     client.sendChat(chat, {}, (err, res) => {
       if (err) {
         console.error(err);
-        setUserName("J");
       }
-      // console.log(res);
-      console.log(messages);
+
+      console.log(res);
     });
   };
 
-  // const joinHandler = () => {
-  //   const user = new User();
-  //   user.setName = userName;
-  //   user.setId = userName;
-  //   client.JoinChat(user, {}, (err, res) => {
-  //     if (err) {
-  //       console.error(err);
-  //     }
-  //     const msg = res.getMessage();
-  //     if (msg === "User already exists") {
-  //       alert(msg);
-  //       return;
-  //     }
-  //     // setJoined(true);
-  //   });
-  // };
+  const joinHandler = () => {
+    const userk = new User();
+    console.log(userk);
+    userk.setName(userName);
+    userk.setId(userName);
+    client.joinChat(userk, {}, (err, res) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log(res);
+      const msg = res.getMessagesList();
+      msg.forEach((m) => {
+        setMessages((messages) => [
+          ...messages,
+          { text: m.getMessage(), sender: m.getUser() },
+        ]);
+      });
 
-  // const nameHandler = (e) => {
-  //   console.log(userName);
-  //   setUserName(e.target.value);
-  // };
+      if (msg === "User already exists") {
+        alert(msg);
+        return;
+      }
+
+      // setJoined(true);
+    });
+  };
+
+  const nameHandler = (e) => {
+    console.log(userName);
+    setUserName(e.target.value);
+  };
 
   // const Login = () => {
   //   return (
@@ -91,6 +103,10 @@ const App = () => {
 
   return (
     <div className="App">
+      <div>
+        <input onChange={nameHandler} type="text" />
+        <button onClick={joinHandler}>Join Chat</button>
+      </div>
       <div className="Chat">
         <div className="Messages">
           {messages.map((message, index) => (

@@ -121,7 +121,7 @@ if (goog.DEBUG && !COMPILED) {
  * @constructor
  */
 proto.chatpackage.JoinResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.chatpackage.JoinResponse.repeatedFields_, null);
 };
 goog.inherits(proto.chatpackage.JoinResponse, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -734,6 +734,13 @@ proto.chatpackage.RecieveMessage.prototype.hasUser = function() {
 
 
 
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.chatpackage.JoinResponse.repeatedFields_ = [2];
+
 
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -765,7 +772,9 @@ proto.chatpackage.JoinResponse.prototype.toObject = function(opt_includeInstance
  */
 proto.chatpackage.JoinResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    message: jspb.Message.getFieldWithDefault(msg, 1, "")
+    res: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    messagesList: jspb.Message.toObjectList(msg.getMessagesList(),
+    proto.chatpackage.ChatMessage.toObject, includeInstance)
   };
 
   if (includeInstance) {
@@ -804,7 +813,12 @@ proto.chatpackage.JoinResponse.deserializeBinaryFromReader = function(msg, reade
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setMessage(value);
+      msg.setRes(value);
+      break;
+    case 2:
+      var value = new proto.chatpackage.ChatMessage;
+      reader.readMessage(value,proto.chatpackage.ChatMessage.deserializeBinaryFromReader);
+      msg.addMessages(value);
       break;
     default:
       reader.skipField();
@@ -835,21 +849,29 @@ proto.chatpackage.JoinResponse.prototype.serializeBinary = function() {
  */
 proto.chatpackage.JoinResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getMessage();
+  f = message.getRes();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
+  f = message.getMessagesList();
+  if (f.length > 0) {
+    writer.writeRepeatedMessage(
+      2,
+      f,
+      proto.chatpackage.ChatMessage.serializeBinaryToWriter
+    );
+  }
 };
 
 
 /**
- * optional string message = 1;
+ * optional string res = 1;
  * @return {string}
  */
-proto.chatpackage.JoinResponse.prototype.getMessage = function() {
+proto.chatpackage.JoinResponse.prototype.getRes = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -858,8 +880,46 @@ proto.chatpackage.JoinResponse.prototype.getMessage = function() {
  * @param {string} value
  * @return {!proto.chatpackage.JoinResponse} returns this
  */
-proto.chatpackage.JoinResponse.prototype.setMessage = function(value) {
+proto.chatpackage.JoinResponse.prototype.setRes = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * repeated ChatMessage messages = 2;
+ * @return {!Array<!proto.chatpackage.ChatMessage>}
+ */
+proto.chatpackage.JoinResponse.prototype.getMessagesList = function() {
+  return /** @type{!Array<!proto.chatpackage.ChatMessage>} */ (
+    jspb.Message.getRepeatedWrapperField(this, proto.chatpackage.ChatMessage, 2));
+};
+
+
+/**
+ * @param {!Array<!proto.chatpackage.ChatMessage>} value
+ * @return {!proto.chatpackage.JoinResponse} returns this
+*/
+proto.chatpackage.JoinResponse.prototype.setMessagesList = function(value) {
+  return jspb.Message.setRepeatedWrapperField(this, 2, value);
+};
+
+
+/**
+ * @param {!proto.chatpackage.ChatMessage=} opt_value
+ * @param {number=} opt_index
+ * @return {!proto.chatpackage.ChatMessage}
+ */
+proto.chatpackage.JoinResponse.prototype.addMessages = function(opt_value, opt_index) {
+  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.chatpackage.ChatMessage, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.chatpackage.JoinResponse} returns this
+ */
+proto.chatpackage.JoinResponse.prototype.clearMessagesList = function() {
+  return this.setMessagesList([]);
 };
 
 

@@ -3,7 +3,7 @@ syntax = "proto3";
 package chatpackage;
 
 service Chat {
-    rpc JoinChat(User) returns (JoinResponse) {};
+    rpc joinChat(User) returns (JoinResponse) {};
     rpc sendChat(ChatMessage) returns (Nil) {};
     rpc recieveChat(Nil) returns (stream ChatMessage) {};
 }
@@ -23,15 +23,8 @@ message RecieveMessage{
     User user= 2;
 }
 message JoinResponse{
-    string message = 1;
+    string res = 1;
+    repeated ChatMessage messages = 2;
 }
 
-
-// message Yohorequest{
-//     string message = 1;
-// }
-
-// message YohoResponse{
-//     string message = 1;
-// }
 
