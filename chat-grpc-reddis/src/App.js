@@ -9,9 +9,9 @@ let client = new ChatClient("http://localhost:8080");
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [userName, setUserName] = useState("Ankit");
+  const [userName, setUserName] = useState(null);
   // const [user, setUser] = useState({});
-  // const [joined, setJoined] = useState(true);
+  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
     // client = new ChatClient("http://localhost:8080");
@@ -41,6 +41,14 @@ const App = () => {
   }, []);
 
   const sendMsg = () => {
+    if (newMessage === "") {
+      alert("Enter message");
+      return;
+    }
+    if (!joined) {
+      alert("Join chat first");
+      return;
+    }
     const chat = new ChatMessage();
     chat.setMessage(newMessage);
     chat.setUser(userName);
@@ -55,6 +63,10 @@ const App = () => {
   };
 
   const joinHandler = () => {
+    if (userName === "") {
+      alert("Enter your name");
+      return;
+    }
     const userk = new User();
     console.log(userk);
     userk.setName(userName);
@@ -78,7 +90,7 @@ const App = () => {
         return;
       }
 
-      // setJoined(true);
+      setJoined(true);
     });
   };
 
@@ -103,19 +115,31 @@ const App = () => {
 
   return (
     <div className="App">
-      <div>
-        <input onChange={nameHandler} type="text" />
-        <button onClick={joinHandler}>Join Chat</button>
-      </div>
+      {!joined ? (
+        <div>
+          <input onChange={nameHandler} type="text" />
+          <button onClick={joinHandler}>Join Chat</button>
+        </div>
+      ) : (
+        <div className="Joined">Your are joined as {userName}</div>
+      )}
+
       <div className="Chat">
         <div className="Messages">
           {messages.map((message, index) => (
             <div
               key={index}
               className={`Message ${
-                message.sender === "user" ? "User" : "Bot"
+                message.sender === userName ? "User" : "Other"
               }`}
             >
+              <div
+                className={`${
+                  message.sender === userName ? "Sender-User" : "Sender"
+                }`}
+              >
+                {message.sender}
+              </div>
               {message.text}
             </div>
           ))}

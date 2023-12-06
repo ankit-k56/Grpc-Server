@@ -1,6 +1,13 @@
 /* App.css */
+body {
+  background-image: url("https://blog.1a23.com/wp-content/uploads/sites/2/2020/02/Desktop.png");
+  background-size: contain;
+}
+
 .App {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
   justify-content: center;
   align-items: center;
   height: 100vh;
@@ -8,8 +15,8 @@
 
 .Chat {
   border: 1px solid #ccc;
-  width: 300px;
-  padding: 10px;
+  width: 400px;
+  padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -20,23 +27,33 @@
 
 .Message {
   padding: 8px;
-  margin-bottom: 8px;
+
+  margin: 25px 0px;
   max-width: 80%;
+  padding: 12px;
   border-radius: 8px;
 }
 
 .User {
-  background-color: #3498db;
+  background-color: #3498db6e;
   color: #fff;
   align-self: flex-end;
+  /* padding: 7px; */
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
 }
 
-.Bot {
-  background-color: #e74c3c;
+.Other {
+  background-color: #6b6b6b73;
   color: #fff;
-  align-self: flex-start;
-}
 
+  align-self: flex-start;
+  position: relative;
+}
+.Joined {
+  color: #fff;
+}
 .InputContainer {
   display: flex;
   margin-top: 10px;
@@ -57,4 +74,27 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.Sender {
+  position: absolute;
+  top: -40%;
+  font-size: 15px;
+  /* color: red; */
+  left: -2px;
+  font-weight: bold;
+  /* background-color: rgb(184, 185, 181); */
+  border-radius: 10px;
+  padding: 3px 5px;
+}
+.Sender-User {
+  position: absolute;
+  top: -40%;
+  font-size: 15px;
+  /* color: red; */
+  font-weight: bold;
+  right: -2px;
+  /* background-color: rgba(156, 156, 156, 0.562); */
+  border-radius: 10px;
+  padding: 3px 5px;
 }

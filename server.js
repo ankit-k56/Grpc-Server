@@ -1,8 +1,5 @@
 const path = require("path");
 
-// const Redis = require("ioredis");
-// const client = new Redis();
-
 const Redis = require("redis");
 const client = Redis.createClient({
   legacyMode: true,
@@ -35,8 +32,6 @@ const protoLoader = require("@grpc/proto-loader");
 
 // const { createUser, addMessage, getUsers, getMessages } = require("./data");
 
-// const { get } = require("http");
-
 const packageDef = protoLoader.loadSync(
   path.resolve(__dirname, "./chat.proto")
 );
@@ -54,33 +49,12 @@ function main() {
         console.error(err);
         return;
       }
-      console.log("Server running at http://localhost:9090");
+      console.log("Server running at port 9090");
       server.start();
     }
   );
 }
 
-let jl = [];
-const jk = async () => {
-  await client.lrange("chatroom", 0, -1, (err, result) => {
-    if (err) console.error(err);
-    else {
-      jl = result;
-    }
-    console.log(jl);
-  });
-  console.log(jl);
-};
-jk();
-
-const getMessagesPromiseresolver = async () => {
-  // const messages = await getMessages();
-  // return messages;
-};
-
-// createUser({ username: "joe" });
-
-// const Users = [];
 const socket = [];
 
 const joinChat = (call, callback) => {
@@ -107,9 +81,7 @@ const joinChat = (call, callback) => {
           return;
         }
 
-        // Assuming each message in the "chatroom" list is a string
         const messages = messagesResult.map((messageText, index) => {
-          // Create a ChatMessage object for each message
           const [user, message] = messageText.split(":");
           return { message, user };
         });
@@ -132,17 +104,11 @@ const sendChat = (call, callback) => {
 };
 
 const recieveChat = (call, callback) => {
-  // console.log(call);
   socket.push({ call });
-  // console.log(socket);
 };
 const getServer = () => {
   const server = new grpc.Server();
   server.addService(chatPackage.Chat.service, {
-    // Yoho: (req, res) => {
-    //   console.log("Hi");
-    //   res(null, { message: "Hello from the server" });
-    // },
     joinChat,
     sendChat,
     recieveChat,
